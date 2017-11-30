@@ -32,23 +32,23 @@ function feq(arrayA, arrayB) {
     gammaB = arrayB  [2];
     deltaB = arrayB  [3];
 
-    if (alfaA == alfaB) {
+
+    if (gammaA >= betaB && betaA <= gammaB) {
         return 1;
     }
 
-    if (gammaA > betaB && alfaA < alfaB) {
-        res = (gammaA - betaB) / (deltaA - deltaB);
-        if (res >= 1) {
-            return (gammaB - betaA) / (deltaA + deltaB);
-        } else {
-            return res;
-        }
-    }
-
-    if (gammaA <= betaB || betaA >= gammaB) {
+    if (deltaA <= alfaB || alfaA >= deltaB) {
         return 0;
     }
-}
+
+    if (deltaA > alfaB && gammaA < betaB) { //Right-side comparison
+        return (deltaA - alfaB) / ((betaB - alfaB) - (gammaA - deltaA));
+    } else { //Left-side comparison
+        return ((deltaB - alfaA) / ((betaA - alfaA) - (gammaB - deltaB)));
+    }
+
+
+} //
 
 function nfeq(arrayA, arrayB) {
 
@@ -74,23 +74,27 @@ function nfeq(arrayA, arrayB) {
     gammaB = arrayB  [2];
     deltaB = arrayB  [3];
 
-    if (alfaA == alfaB) {
-        return 1;
+    if(((betaA <= alfaB)&&(alfaA != betaB))||((gammaA >= deltaB) && (deltaA!= gammaB))){
+        return 0;
     }
 
-    if (gammaA > betaB && alfaA < alfaB) {
-        res = (gammaA - betaB) / (deltaA - deltaB);
-        if (res >= 1) {
-            return (gammaB - betaA) / (deltaA + deltaB);
-        } else {
-            return res;
+    if(alfaA < deltaB){
+        if(deltaA > gammaB){
+            return Math.min(
+                ((betaA - alfaB)/((betaB - alfaB) - (alfaA - betaA))),
+                ((gammaA - deltaB)/((gammaB - deltaB) - (deltaA - gammaA))));
+        }else{
+            return ((betaA - alfaB)/(betaB - alfaB) - (alfaA - betaA)); //Left-side comparison
+        }
+    }else{
+        if(deltaA > gammaB){
+            return ((gammaA - deltaB)/((gammaB - deltaB) - (deltaA - gammaA))); //Right-side comparison
+        }else{
+            return 1;
         }
     }
 
-    if (gammaA <= betaB || betaA >= gammaB) {
-        return 0;
-    }
-}
+} //
 
 function fgt(arrayA, arrayB) {
 
@@ -127,7 +131,7 @@ function fgt(arrayA, arrayB) {
     if (deltaA <= gammaB) {
         return 0;
     }
-}
+} //
 
 function nfgt(arrayA, arrayB) {
 
@@ -274,7 +278,7 @@ function flt(arrayA, arrayB) {
     if (alfaA >= betaB) {
         return 0;
     }
-}
+} //
 
 function nflt(arrayA, arrayB) {
 
@@ -389,7 +393,7 @@ function nfleq(arrayA, arrayB) {
 
 }
 
-function f_and(value1, value2) {
+function f_and(value1, value2) { //
 
     if (value1 <= value2)
         return value1;
