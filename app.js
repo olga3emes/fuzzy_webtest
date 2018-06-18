@@ -44,9 +44,9 @@ $('body').on('click', function () {
 
 
     //var arrayA= [1,5,8,9];
-    $('#arrayA').text("[" + arrayA + "]");
+    $('#arrayA').text("A =[" + arrayA + "]");
     //var arrayB= [9.8,4,3.6,9];
-    $('#arrayB').text("[" + arrayB + "]");
+    $('#arrayB').text("B =[" + arrayB + "]");
 
     var value0 = feq(arrayA, arrayB);
     $('#feq').text(value0);
